@@ -10,7 +10,7 @@ It is the GPU companion (Part II) of the SIMD/CPU library
 
 ## Overview
 
-Recursive filters realized as cascaded biquads pose a fundamental obstacle to parallel computation: every output sample depends on the previous two. This repository provides four GPU realizations of the same filter, spanning the design space from cascaded-form solvers to the literature's direct-form approach:
+Recursive (IIR) filters realized as cascaded biquads pose a fundamental obstacle to parallel computation: every output sample depends on the previous two. This repository provides four GPU realizations of the same filter, spanning the design space from cascaded-form solvers to the literature's direct-form approach:
 
 - **PH factorization** — partial LU decomposition of the block-tridiagonal recurrence; head rows solved via correction vectors.
 - **STCR** (single-stage tridiagonal cyclic reduction) — log-depth elimination with both generic loop-form and hand-unrolled *spill-proof* back-substitution kernels, proven bit-identical.
@@ -150,7 +150,7 @@ If you use this code in your research, please cite:
 ```bibtex
 @article{zhai2026gpu,
   author  = {Zhai, Haotian and Paris, Bernd-Peter},
-  title   = {<!-- PAPER TITLE HERE -->},
+  title   = {Parallel Cascaded Recursive Filtering on Multi-Core CPUs and GPUs},
   journal = {arXiv preprint},
   year    = {2026}
 }

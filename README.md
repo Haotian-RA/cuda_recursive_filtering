@@ -3,7 +3,7 @@
 High-performance CUDA kernels for parallel IIR (recursive) filtering of cascaded second-order sections (biquads) on NVIDIA GPUs.
 
 This library accompanies the paper:
-> **H. Zhai and B.-P. Paris**, "Parallel Cascaded Recursive Filtering on Multi-Core CPUs and GPUs," to be submitted to **, 2026.
+> **H. Zhai and B.-P. Paris**, "Parallel Cascaded Recursive Filtering on Multi-Core CPUs and GPUs," to be submitted to *IEEE Transactions on Parallel and Distributed Systems*, 2026.
 
 It is the GPU companion (Part II) of the SIMD/CPU library
 [matrix_form_recursive_filtering](https://github.com/Haotian-RA/matrix_form_recursive_filtering) (Part I).

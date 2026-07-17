@@ -23,7 +23,9 @@ All kernels are single-launch and grid-wide: inter-chunk carries propagate throu
 
 Measured on **GTX 1070** (Pascal GP104, CC 6.1) and **RTX 3060** (Ampere GA106, CC 8.6), float32, batch sizes 2^16 – 2^25 samples:
 
-![Algorithm comparison across filter orders](figures/fig5_algorithms_vs_order.png)
+<div align="center">
+  <img src="figures/fig5_algorithms_vs_order.png" alt="Algorithm comparison across filter orders" width="600"/>
+</div>
 
 Highlights at saturation (batch 2^25) on the RTX 3060:
 

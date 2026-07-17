@@ -1,9 +1,9 @@
 # CUDA Parallel IIR Filter Kernels for Cascaded Biquads
 
-High-performance CUDA kernels for parallel IIR (recursive) filtering of cascaded second-order sections (biquads) on NVIDIA GPUs, with a shared accuracy/throughput harness, bit-faithful CPU emulators for GPU-free validation, and the full measurement campaigns on two GPU generations.
+High-performance CUDA kernels for parallel IIR (recursive) filtering of cascaded second-order sections (biquads) on NVIDIA GPUs.
 
-This repository accompanies the paper:
-> **H. Zhai and B.-P. Paris**, "<!-- PAPER TITLE HERE -->," to be submitted to *IEEE Transactions on Parallel and Distributed Systems*, 2026.
+This library accompanies the paper:
+> **H. Zhai and B.-P. Paris**, "Parallel Cascaded Recursive Filtering on Multi-Core CPUs and GPUs," to be submitted to **, 2026.
 
 It is the GPU companion (Part II) of the SIMD/CPU library
 [matrix_form_recursive_filtering](https://github.com/Haotian-RA/matrix_form_recursive_filtering) (Part I).

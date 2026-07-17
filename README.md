@@ -29,12 +29,16 @@ Measured on **GTX 1070** (Pascal GP104, CC 6.1) and **RTX 3060** (Ampere GA106, 
 
 Highlights at saturation (batch 2^25) on the RTX 3060:
 
+<div align="center">
+
 | Order | Best cascaded kernel | Throughput | Direct-form PLR |
 |---:|---|---:|---:|
 | 2  | DTCR (64x64) | **38.4 GS/s** | 28.7 GS/s |
 | 4  | DTCR (64x64) | 32.2 GS/s | 19.7 GS/s |
 | 8  | PH (32x64)   | 24.5 GS/s | 11.2 GS/s |
 | 16 | PH (32x64)   | 15.9 GS/s | fails accuracy gate |
+
+</div>
 
 At order 2, DTCR reaches ~85% of the device's ~45 GS/s streaming-bandwidth roof. The cascaded solvers degrade gracefully with filter order and remain numerically robust throughout, while the direct-form realization loses throughput rapidly and fails the accuracy gate at order 16 — a numerical property of the direct form that the CPU emulator predicts before any hardware run.
 

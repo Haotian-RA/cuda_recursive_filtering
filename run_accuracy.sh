@@ -10,6 +10,11 @@
 
 set -u
 
+# Run everything relative to the repo root (where this script lives);
+# all generated artifacts (reference.bin, filter_taps.hpp, binary) go to build/.
+cd "$(dirname "$0")"
+mkdir -p build
+
 
 # ==========================================================================
 # Configuration
@@ -78,7 +83,8 @@ for N_SECTIONS in "${ORDERS[@]}"; do
     echo "----- Order $ORDER (N_SECTIONS=$N_SECTIONS) -----"
 
     # Step 1: Generate reference
-    python3 ref_generate.py --quiet
+    python3 tools/ref_generate.py --quiet \
+        --output build/reference.bin --header build/filter_taps.hpp
     if [ $? -ne 0 ]; then
         echo "  reference generation FAILED"
         FAILED+=("order $ORDER (ref)")
@@ -98,12 +104,13 @@ for N_SECTIONS in "${ORDERS[@]}"; do
             echo "  PLR_X_MAX=auto: ascending spill calibration (order $ORDER)"
             plr_calib() {
                 nvcc -O2 -arch=native -w -Xptxas -v \
+                     -Iinclude -Ibuild \
                      $GPU_FLAG -DKERNEL_PLR -DPLR_X_MAX=$1 \
                      -DN_SAMPLES_LOG2=$N_SAMPLES_LOG2 \
                      -DN_SECTIONS=$N_SECTIONS \
                      -DBLOCK_SIZE=$BLOCK_SIZE \
                      -DN_BLOCKS=$N_BLOCKS \
-                     -c test_accuracy.cu -o /tmp/plr_calib.o > /tmp/plr_calib.log 2>&1 \
+                     -c src/test_accuracy.cu -o /tmp/plr_calib.o > /tmp/plr_calib.log 2>&1 \
                     || return 2
                 local blk=$(grep -A5 "Compiling entry function.*PLR_" /tmp/plr_calib.log)
                 CAL_REGS=$(echo "$blk" | grep -o "[0-9]* registers" | head -1)
@@ -146,6 +153,7 @@ for N_SECTIONS in "${ORDERS[@]}"; do
 
     # Step 2: Compile
     nvcc -O2 -arch=native -w \
+         -Iinclude -Ibuild \
          $GPU_FLAG \
          $UNROLL_FLAG \
          $PLR_FLAG \
@@ -154,7 +162,7 @@ for N_SECTIONS in "${ORDERS[@]}"; do
          -DN_SECTIONS=$N_SECTIONS \
          -DBLOCK_SIZE=$BLOCK_SIZE \
          -DN_BLOCKS=$N_BLOCKS \
-         -o main test_accuracy.cu
+         -o build/main src/test_accuracy.cu
     if [ $? -ne 0 ]; then
         echo "  compilation FAILED"
         FAILED+=("order $ORDER (compile)")
@@ -162,7 +170,7 @@ for N_SECTIONS in "${ORDERS[@]}"; do
     fi
 
     # Step 3: Run
-    ./main
+    ./build/main
     if [ $? -eq 0 ]; then
         PASSED+=("order $ORDER")
     else

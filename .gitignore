@@ -1,0 +1,9 @@
+# Generated build artifacts (reference.bin, filter_taps.hpp, compiled binary)
+build/
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
